@@ -2,8 +2,16 @@ const express = require('express');
 
 const app = express();
 
+// Home Page
 app.get("/", function(req, res) {
-    res.send("Hello World");
+    res.send("Home Page");
 });
 
-app.listen(5000);
+// Notes Page
+app.get("/notes", function(req, res) {
+    res.send("Notes Page");
+});
+
+app.listen(5000, function() {
+    console.log(`Server started at PORT: 5000`);
+});
