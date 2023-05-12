@@ -13,5 +13,5 @@ app.get("/notes", function(req, res) {
 });
 
 app.listen(5000, function() {
-    console.log(`Server started at PORT: 5000`);
+    console.log(`Server started at Port 5000`);
 });
