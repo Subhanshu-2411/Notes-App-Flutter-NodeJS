@@ -13,25 +13,21 @@ mongoose.connect("mongodb+srv://subhanshu:ramayana1@cluster0.bm8slnx.mongodb.net
     });
 
     // Notes Page
-    app.get("/notes/list", async function(req, res) {
-        const notes = await Note.find();
+    app.get("/notes/list/:userid", async function(req, res) {
+        const notes = await Note.find({userid: req.params.userid});
+
         res.json(notes);
     });
 
-    app.get("/notes/add", async function(req, res) {
-        const newNote = new Note({
-            id: "0002",
-            userid: "subhanshu.bansal5566@gmail.com",
-            title: "My First Note",
-            content: "My Note"
-        });
-        await newNote.save();
+    app.post("/notes/add", async function(req, res) {
 
-        const response = {
-            message: "New Note Created"
-        };
+        // await newNote.save();
+        //
+        // const response = {
+        //     message: "New Note Created"
+        // };
 
-        res.json(response);
+        res.json(req.body);
     });
 
 });
