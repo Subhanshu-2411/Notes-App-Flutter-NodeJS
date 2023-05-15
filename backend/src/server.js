@@ -25,7 +25,7 @@ mongoose.connect("mongodb+srv://subhanshu:ramayana1@cluster0.bm8slnx.mongodb.net
     });
 
     // Notes Page
-    app.get("/notes/list/", async function(req, res) {
+    app.post("/notes/list/", async function(req, res) {
         const notes = await Note.find(
             {
                 userid: req.body.userid
@@ -36,7 +36,11 @@ mongoose.connect("mongodb+srv://subhanshu:ramayana1@cluster0.bm8slnx.mongodb.net
     });
 
     app.post("/notes/add", async function(req, res) {
-
+        await Note.deleteOne(
+            {
+                id: req.body.id,
+            }
+        )
         const newNote = new Note(
             {
                 id: req.body.id,
@@ -49,9 +53,26 @@ mongoose.connect("mongodb+srv://subhanshu:ramayana1@cluster0.bm8slnx.mongodb.net
         await newNote.save();
 
         const response = {
-            message: "New Note Created"
+            message: "New Note Created " + `id: ${req.body.id}`
         };
+
+        res.json(response);
     });
+
+    app.post("/notes/delete", async function(req, res) {
+        await Note.deleteOne(
+            {
+                id: req.body.id,
+            }
+        )
+
+        const response = {
+            message: "Note Deleted"
+        };
+
+        res.json(response);
+    });
+
 
 });
 
