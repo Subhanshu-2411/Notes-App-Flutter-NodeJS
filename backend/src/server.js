@@ -1,6 +1,12 @@
+const functions = require('firebase-functions');
+
 const express = require('express');
 
 const app = express();
+
+const cors = require('cors');
+
+app.use(cors());
 
 const mongoose = require('mongoose');
 
@@ -41,3 +47,5 @@ const PORT = process.env.PORT || 5000
 app.listen(PORT, function() {
     console.log(`Server started at Port ${PORT}` );
 });
+
+exports.app = functions.https.onRequest(app);
