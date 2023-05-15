@@ -6,6 +6,18 @@ const mongoose = require('mongoose');
 
 const Note = require('./models/Note');
 
+const bodyParser = require('body-parser');
+app.use(
+    bodyParser.urlencoded(
+        {
+            extended: false
+        }
+    )
+)
+app.use(
+    bodyParser.json()
+)
+
 mongoose.connect("mongodb+srv://subhanshu:ramayana1@cluster0.bm8slnx.mongodb.net/?retryWrites=true&w=majority").then(function() {
     // Home Page
     app.get("/", function(req, res) {
@@ -25,13 +37,20 @@ mongoose.connect("mongodb+srv://subhanshu:ramayana1@cluster0.bm8slnx.mongodb.net
 
     app.post("/notes/add", async function(req, res) {
 
-        // await newNote.save();
-        //
-        // const response = {
-        //     message: "New Note Created"
-        // };
+        const newNote = new Note(
+            {
+                id: req.body.id,
+                userid: req.body.userid,
+                title: req.body.title,
+                content: req.body.content
+            }
+        )
 
-        res.json(req.body);
+        await newNote.save();
+
+        const response = {
+            message: "New Note Created"
+        };
     });
 
 });
