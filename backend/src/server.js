@@ -13,8 +13,12 @@ mongoose.connect("mongodb+srv://subhanshu:ramayana1@cluster0.bm8slnx.mongodb.net
     });
 
     // Notes Page
-    app.get("/notes/list/:userid", async function(req, res) {
-        const notes = await Note.find({userid: req.params.userid});
+    app.get("/notes/list/", async function(req, res) {
+        const notes = await Note.find(
+            {
+                userid: req.body.userid
+            }
+        );
 
         res.json(notes);
     });
