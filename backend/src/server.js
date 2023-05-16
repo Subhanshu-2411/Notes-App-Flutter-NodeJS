@@ -1,6 +1,12 @@
+const functions = require('firebase-functions');
+
 const express = require('express');
 
 const app = express();
+
+const cors = require('cors');
+
+app.use(cors());
 
 const mongoose = require('mongoose');
 
@@ -18,7 +24,9 @@ app.use(
     bodyParser.json()
 )
 
-mongoose.connect("mongodb+srv://subhanshu:ramayana1@cluster0.bm8slnx.mongodb.net/?retryWrites=true&w=majority").then(function() {
+const DBPath = "mongodb+srv://subhanshu:ramayana1@cluster0.bm8slnx.mongodb.net/?retryWrites=true&w=majority";
+
+mongoose.connect(DBPath).then(function() {
     // Home Page
     app.get("/", function(req, res) {
         res.json({
@@ -35,7 +43,9 @@ mongoose.connect("mongodb+srv://subhanshu:ramayana1@cluster0.bm8slnx.mongodb.net
 
 
 
-
-app.listen(5000, function() {
-    console.log(`Server started at Port 5000`);
+const PORT = process.env.PORT || 5000
+app.listen(PORT, function() {
+    console.log(`Server started at Port ${PORT}` );
 });
+
+exports.app = functions.https.onRequest(app);
